@@ -21,8 +21,6 @@ PACKAGE=dynacase-webdesk
 AC_SUBST(APPNAME)
 APPNAME=DYNACASE-WEBDESK
 ac_default_prefix=/var/www/dynacase/dynacase
-LICENSE="http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU Affero General Public License"
-AC_SUBST(LICENSE)
 
 AC_SUBST(PUBRULE)
 PUBRULE="$(pwd)/buildTools"
