@@ -6,12 +6,12 @@
 
 include_once 'FDL/Lib.Dir.php';
 
-function freedom_search(Action &$action)
+function freedom_search(Action & $action)
 {
     
     header('Content-type: text/xml; charset=utf-8');
     
-    $dbaccess = getParam("FREEDOM_DB");
+    $dbaccess = $action->dbaccess;
     
     $max = GetHttpVars("max", 5);
     $s = GetHttpVars("s", "");
@@ -24,7 +24,6 @@ function freedom_search(Action &$action)
     }
     
     if (is_integer($s)) $s = getIdFromName($dbaccess, $s);
-
     /* @var $fs _DSEARCH */
     $fs = new_Doc($dbaccess, $s);
     if (!$fs->isAffected()) {
@@ -32,7 +31,7 @@ function freedom_search(Action &$action)
         $action->lay->set("csearch", false);
         return;
     }
-
+    
     $action->lay->set("stitle", $fs->getTitle());
     
     $rdoc = $fs->getContent();
