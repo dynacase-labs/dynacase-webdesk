@@ -8,15 +8,13 @@ include_once ("WHAT/Lib.Http.php");
 include_once ("WHAT/Class.Layout.php");
 include_once ("FDL/Lib.Dir.php");
 
-function freedomrss_search(Action &$action)
+function freedomrss_search(Action & $action)
 {
     
     $str = GetHttpVars("str", "");
     $sys = GetHttpVars("sys", 0);
     $user = GetHttpVars("user", $action->user->id);
     $lim = 10;
-    
-    $dbaccess = getParam("FREEDOM_DB");
     
     $filter[0] = "(title ~* '" . pg_escape_string($str) . "')";
     $filter[1] = "(gui_isrss = 'yes')";
@@ -65,7 +63,7 @@ function freedomrss_search(Action &$action)
 
 function rssGetFamTitle($id)
 {
-    $t = getTDoc(getParam("FREEDOM_DB") , $id);
+    $t = getTDoc('', $id);
     if (isset($t["title"])) return $t["title"];
     return "Family $id";
 }

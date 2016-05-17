@@ -8,7 +8,7 @@ include_once 'FDL/Lib.Dir.php';
 function portal(Action & $action)
 {
     
-    $dbaccess = getParam("FREEDOM_DB");
+    $dbaccess = $action->dbaccess;
     $debug = false;
     
     $action->parent->AddCssRef("WEBDESK:webdesk-system.css", true);
@@ -150,7 +150,7 @@ function portal(Action & $action)
         foreach ($svcnum as $k => $v) {
             $spage = ($svcpage[$k] == "" ? 1 : $svcpage[$k]);
             if ($ppage != $spage) continue;
-            $sd = getTDoc(getParam("FREEDOM_DB") , $svcid[$k]);
+            $sd = getTDoc($dbaccess, $svcid[$k]);
             if (getV($sd, "psvc_vurl") == "") continue;
             $tsvc[] = array(
                 "rg" => count($tsvc) ,

@@ -22,7 +22,7 @@ if ($svcid == "" || ($do != "add" && $do != "del")) {
     exit;
 }
 
-$dbaccess = $action->GetParam("FREEDOM_DB");
+$dbaccess = $action->dbaccess;
 $dsvc = new_Doc($dbaccess, $svcid);
 if (!$dsvc->isAlive() || $dsvc->fromid != getIdFromName($dbaccess, "PORTAL_SERVICE")) {
     print "error: $svcid is not a valid doc or a portal service\n";

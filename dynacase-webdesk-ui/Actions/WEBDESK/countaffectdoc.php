@@ -8,9 +8,9 @@
  */
 include_once ("FDL/Class.Doc.php");
 
-function countaffectdoc(Action &$action)
+function countaffectdoc(Action & $action)
 {
-    $dbaccess = $action->GetParam("FREEDOM_DB");
+    $dbaccess = $action->dbaccess;
     
     $doc = new_doc($dbaccess, "WS_MYAFFECTDOC");
     $count = 'x';

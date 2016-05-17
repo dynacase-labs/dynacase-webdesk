@@ -27,7 +27,6 @@ function svccontact_search(&$action)
     
     $colsz = (is_numeric(GetHttpVars("csz", 0)) ? GetHttpVars("csz", 0) : 0);
     
-    $dbaccess = getParam("FREEDOM_DB"); //"host=adi.tlse.i-cesam.com dbname=freedom user=anakeen";
     $ret = "";
     $addret = "";
     
@@ -35,15 +34,15 @@ function svccontact_search(&$action)
     if ($soc == 1) $filter[0].= " OR (us_society ~* '" . ($beg == 0 ? "" : "^") . $str . "')";
     $rfilter = ($beg == 0 ? "" : "^");
     $search = new SearchDoc("", $fam);
-
+    
     $search->setSlice($lim);
-
+    
     foreach ($filter as $currentFilter) {
         $search->addFilter($currentFilter);
     }
-
+    
     $r = $search->search();
-
+    
     $maxf = $maxc * $maxl;
     $total = count($r);
     $moreresult = ($total > $maxf ? true : false);
@@ -132,7 +131,7 @@ function svccontact_search(&$action)
         for ($icol = 0; $icol < $maxc; $icol++) {
             $ret.= "<td style=\"vertical-align:top\">";
             if (isset($ccol[$icol]) && is_array($ccol[$icol])) {
-                foreach ($ccol[$icol] as $v)  {
+                foreach ($ccol[$icol] as $v) {
                     $ret.= $v;
                 }
             }

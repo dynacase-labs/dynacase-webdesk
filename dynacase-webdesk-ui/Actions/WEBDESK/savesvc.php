@@ -5,7 +5,7 @@
 */
 
 include_once 'FDL/Lib.Dir.php';
-function savesvc(Action &$action)
+function savesvc(Action & $action)
 {
     
     $excludev = array(
@@ -27,7 +27,7 @@ function savesvc(Action &$action)
         return;
     }
     
-    $tup = GetChildDoc(getParam("FREEDOM_DB") , 0, 0, "ALL", array(
+    $tup = GetChildDoc($action->dbaccess, 0, 0, "ALL", array(
         "uport_ownerid = '" . $action->user->fid . "'"
     ) , $action->user->id, "LIST", "USER_PORTAL");
     if (count($tup) < 1 || !$tup[0]->isAffected()) {

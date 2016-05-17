@@ -4,10 +4,10 @@
  * @package WEBDESK
 */
 
-function freedomrss_edit(Action &$action)
+function freedomrss_edit(Action & $action)
 {
     
-    $dbaccess = getParam("FREEDOM_DB");
+    $dbaccess = $action->dbaccess;
     
     include_once ("WHAT/Lib.Http.php");
     include_once ("FDL/Lib.Dir.php");
