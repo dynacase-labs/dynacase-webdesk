@@ -16,10 +16,10 @@ function freedomrss_search(Action & $action)
     $user = GetHttpVars("user", $action->user->id);
     $lim = 10;
     
-    $filter[0] = "(title ~* '" . pg_escape_string($str) . "')";
+    $filter[0] = "(title ~* " . pg_escape_literal($str) . ")";
     $filter[1] = "(gui_isrss = 'yes')";
-    if ($sys == 1) $filter[2] = "(owner = " . pg_escape_string($user) . " or gui_sysrss = 'yes')";
-    else $filter[2] = "(owner = " . pg_escape_string($user) . ")";
+    if ($sys == 1) $filter[2] = "(owner = " . pg_escape_literal($user) . " or gui_sysrss = 'yes')";
+    else $filter[2] = "(owner = " . pg_escape_literal($user) . ")";
     
     $famids = array(
         "SEARCH",
@@ -67,4 +67,3 @@ function rssGetFamTitle($id)
     if (isset($t["title"])) return $t["title"];
     return "Family $id";
 }
-?>

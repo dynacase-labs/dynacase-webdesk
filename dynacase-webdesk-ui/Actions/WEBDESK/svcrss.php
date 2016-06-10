@@ -7,11 +7,11 @@
 include_once ("WEBDESK/Lib.Services.php");
 function svcrss(Action & $action)
 {
-    $action->lay->set("rss", false);
+    $action->lay->rSet("rss", false);
     $ilink = urldecode(GetHttpVars("rss", ""));
     $rsslink = parseUrl($ilink);
     if ($rsslink == "") {
-        $action->lay->set("msg", _("wd no rss link given") . "  [$ilink]");
+        $action->lay->eSet("msg", _("wd no rss link given") . "  [$ilink]");
         return;
     }
     $max = GetHttpVars("max", 5);
@@ -44,15 +44,15 @@ function svcrss(Action & $action)
         }
         
         if ($link->length > 0) {
-            $action->lay->set("nocontent", false);
-            $action->lay->set("rss", true);
+            $action->lay->rSet("nocontent", false);
+            $action->lay->rSet("rss", true);
             if ($rootName === "feed") {
                 $title = $xpath->query($rssNs . "title")->item(0)->nodeValue;
             } else {
                 $title = $xpath->query("channel/title")->item(0)->nodeValue;
             }
-            $action->lay->set("title", htmlspecialchars($title));
-            $action->lay->set("uptime", strftime("%H:%M %d/%m/%Y", time()));
+            $action->lay->eSet("title", $title);
+            $action->lay->rSet("uptime", strftime("%H:%M %d/%m/%Y", time()));
             
             if ($rootName === "feed") {
                 $rssc = $xpath->query($rssNs . "entry");
@@ -85,13 +85,13 @@ function svcrss(Action & $action)
                     }
                     
                     $tr[$ic] = $v;
-                    $tr[$ic]["id"] = $k;
-                    $tr[$ic]["title"] = ($v["title"]);
+                    $tr[$ic]["id"] = Doc::htmlEncode($k);
+                    $tr[$ic]["title"] = Doc::htmlEncode($v["title"]);
                     $sdesc = ($textlg > 0 ? substr($v["description"], 0, $textlg) . (strlen($v["description"]) > $textlg ? "..." : "") : $v["description"]);
-                    $tr[$ic]["descr"] = $sdesc;
+                    $tr[$ic]["descr"] = Doc::htmlEncode($sdesc);
                     
-                    $tr[$ic]["date"] = isset($v["pubdate"]) ? $v["pubdate"] : '';
-                    $tr[$ic]["vfull"] = $vfull;
+                    $tr[$ic]["date"] = Doc::htmlEncode(isset($v["pubdate"]) ? $v["pubdate"] : '');
+                    $tr[$ic]["vfull"] = (bool)$vfull;
                     
                     $ic++;
                     if ($ic > $max) {
@@ -101,13 +101,13 @@ function svcrss(Action & $action)
                 
                 $action->lay->setBlockData("rssnews", $tr);
             } else {
-                $action->lay->set("nocontent", true);
+                $action->lay->rSet("nocontent", true);
             }
         } else {
-            $action->lay->set("msg", _("[TEXT:no information available, verify your server have http access to internet and/or check link please...]") . '(<a href="' . $ilink . '">' . $ilink . '</a>)');
+            $action->lay->eSet("msg", _("[TEXT:no information available, verify your server have http access to internet and/or check link please...]") . '(<a href="' . $ilink . '">' . $ilink . '</a>)');
         }
     } else {
-        $action->lay->set("msg", _("[TEXT:no information available, verify your server have http access to internet and/or check link please...]") . '(<a href="' . $ilink . '">' . $ilink . '</a>)');
+        $action->lay->eSet("msg", _("[TEXT:no information available, verify your server have http access to internet and/or check link please...]") . '(<a href="' . $ilink . '">' . $ilink . '</a>)');
     }
     header('Content-type: text/xml; charset=utf-8');
 }
